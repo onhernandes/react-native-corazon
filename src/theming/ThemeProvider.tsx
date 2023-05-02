@@ -1,26 +1,38 @@
 import React, { createContext, type PropsWithChildren } from "react";
 import type { Theme } from "./types";
-import { MaterialYou } from "./themes";
-
-const themes = {
-  MaterialYou,
-};
+import * as themes from "./themes";
+import { mergeRight } from "ramda";
 
 export const ThemeContext = createContext<Theme | undefined>(undefined);
 
-export type ThemeProviderProps = PropsWithChildren<{
-  theme?: Theme | keyof typeof themes;
-}>;
+export type AvailableThemes = keyof typeof themes;
 
-const ThemeProvider = ({ children, theme }: ThemeProviderProps) => {
-  theme = theme ?? "MaterialYou";
+export type ThemeProviderProps = PropsWithChildren<
+  | {
+      theme?: Partial<Theme>;
+      baseTheme?: AvailableThemes;
+      themeOverride: true;
+    }
+  | { theme: Theme; themeOverride: false }
+>;
 
-  if (typeof theme === "string") {
-    theme = themes[theme];
+const ThemeProvider = ({ children, ...props }: ThemeProviderProps) => {
+  let appliedTheme: Theme = themes.MaterialYou;
+
+  if (props.themeOverride) {
+    const { baseTheme = "MaterialYou" } = props;
+    const customTheme = props?.theme ?? {};
+    appliedTheme = mergeRight(themes[baseTheme], customTheme);
+  }
+
+  if (!props.themeOverride) {
+    appliedTheme = props.theme;
   }
 
   return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={appliedTheme}>
+      {children}
+    </ThemeContext.Provider>
   );
 };
 

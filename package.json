@@ -54,6 +54,7 @@
     "@react-native-community/eslint-config": "^3.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",
+    "@types/ramda": "^0.29.1",
     "@types/react": "~17.0.21",
     "@types/react-native": "0.70.0",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
@@ -103,5 +104,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "ramda": "^0.29.0"
   }
 }
