@@ -1,3 +1,5 @@
+import type { TextStyle } from "react-native";
+
 export type Colors = {
   brand?: Record<string, string>;
   primary: string;
@@ -10,9 +12,12 @@ export type Font = {
   fontWeight: string | number;
 };
 
+export type FontTypes = "regular" | "medium" | "light" | "thin";
+
 export type Fonts = {
-  ios?: Record<string, FontConfig>;
-  android?: Record<string, FontConfig>;
+  standard: Record<FontTypes, Font>;
+  ios?: Record<FontTypes, Font>;
+  android?: Record<FontTypes, Font>;
 };
 
 export type ComponentStyle = Record<string, unknown>;
@@ -22,4 +27,5 @@ export type Theme = {
   colors: Colors;
   fonts: Fonts;
   components?: Record<string, ComponentStyle>;
+  typography?: Record<string, TextStyle>;
 };
