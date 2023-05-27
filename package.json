@@ -106,6 +106,7 @@
     ]
   },
   "dependencies": {
-    "ramda": "^0.29.0"
+    "ramda": "^0.29.0",
+    "react-native-paper": "^5.8.0"
   }
 }
